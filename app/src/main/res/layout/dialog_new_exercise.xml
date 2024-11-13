@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/exercise_name_prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/title_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/exercise_name_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_input">
+
+        <RadioButton
+            android:id="@+id/weights_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weights" />
+
+        <RadioButton
+            android:id="@+id/cardio_radio"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cardio" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/createActivityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="152dp"
+        android:text="@string/create_activity_button"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weights"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="52dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/createActivityButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/radioGroup">
+
+
+        <EditText
+            android:id="@+id/weight_input"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="56dp"
+            android:ems="10"
+            android:inputType="number"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/reps_input"
+            app:layout_constraintEnd_toStartOf="@+id/sets_input"
+            app:layout_constraintStart_toEndOf="@+id/reps_input"
+            app:layout_constraintTop_toBottomOf="@+id/weight_label" />
+
+        <TextView
+            android:id="@+id/reps_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="3dp"
+            android:text="@string/reps"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/reps_input"
+            app:layout_constraintEnd_toEndOf="@+id/reps_input" />
+
+        <TextView
+            android:id="@+id/sets_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="26dp"
+            android:labelFor="@id/sets_input"
+            android:text="@string/sets"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/weight_input"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/weight_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="14dp"
+            android:labelFor="@+id/weight_input"
+            android:text="@string/weight"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/sets_input"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/reps_input"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="61dp"
+            android:layout_marginBottom="1dp"
+            android:ems="10"
+            android:inputType="number"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/sets_input"
+            app:layout_constraintEnd_toStartOf="@+id/weight_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weight_label" />
+
+        <EditText
+            android:id="@+id/sets_input"
+            android:layout_width="0dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="43dp"
+            android:layout_marginBottom="14dp"
+            android:ems="10"
+            android:inputType="number"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/weight_input"
+            app:layout_constraintTop_toTopOf="@+id/weight_label" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/distance_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weights" />
+
+    <TextView
+        android:id="@+id/distance_label"
+        android:labelFor="@id/distance_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:text="@string/enter_distance"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/distance_input"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Activity Tracker</string>
+    <string name="new_exercise_title">Create New Exercise\n</string>
+    <string name="exercise_name_prompt">exercise name\n</string>
+    <string name="exercise_name_input">input exercise\n</string>
+    <string name="weights">Weights</string>
+    <string name="cardio">Cardio</string>
+    <string name="create_activity_button">Create Activity</string>
+    <string name="reps">Reps</string>
+    <string name="sets">Sets</string>
+    <string name="enter_distance">Enter Distance</string>
+    <string name="new_exercise_message">Create a new exercise</string>
+    <string name="weight">weight</string>
 </resources>
