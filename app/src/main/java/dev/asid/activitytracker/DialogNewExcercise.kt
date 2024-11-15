@@ -63,7 +63,7 @@ class DialogNewExercise: DialogFragment() {
             val radioButton = dialogView.findViewById<MaterialRadioButton>(intSelectedButton)
             if (radioButton == weightsRadio){
                 exercise.type = EXERCISETYPE.WEIGHTS
-                Toast.makeText(requireContext(), "Weights Selected", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(requireContext(), "Weights Selected", Toast.LENGTH_SHORT).show()
                 dismiss()
             } else if (radioButton == cardioRadio) {
                 exercise.type = EXERCISETYPE.CARDIO
@@ -72,6 +72,8 @@ class DialogNewExercise: DialogFragment() {
             else{
                 Toast.makeText(requireContext(), "Please select a type", Toast.LENGTH_SHORT).show()
             }
+            val callingActivity = activity as MainActivity?
+            callingActivity!!.addExercise(exercise)
 
 
         }

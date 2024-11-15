@@ -1,9 +1,12 @@
 package dev.asid.activitytracker
 
+import android.os.Parcel
+import android.os.Parcelable
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.Serializable
 
-class Exercise {
+class Exercise() :Serializable {
     enum class EXERCISETYPE {WEIGHTS, CARDIO}
 
     var distance: Int? = null
@@ -19,6 +22,8 @@ class Exercise {
     private val JSON_SETS = "sets"
     private val JSON_WEIGHT = "weight"
     private val JSON_DISTANCE = "distance"
+
+
 
     @Throws(JSONException::class)
     constructor(json: JSONObject) {
@@ -43,6 +48,8 @@ class Exercise {
         json.put(JSON_DISTANCE, distance)
         return json
     }
+
+    
 
 
 }

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Activity Tracker</string>
-    <string name="new_exercise_title">Create New Exercise\n</string>
-    <string name="exercise_name_prompt">exercise name\n</string>
-    <string name="exercise_name_input">input exercise\n</string>
+    <string name="new_exercise_title">Create New Exercise</string>
+    <string name="exercise_name_prompt">Name of Exercise</string>
+    <string name="exercise_name_input">benchpress…</string>
     <string name="weights">Weights</string>
     <string name="cardio">Cardio</string>
     <string name="create_activity_button">Create Activity</string>
@@ -10,5 +10,10 @@
     <string name="sets">Sets</string>
     <string name="enter_distance">Enter Distance</string>
     <string name="new_exercise_message">Create a new exercise</string>
-    <string name="weight">weight</string>
+    <string name="weight">Weight</string>
+    <string name="exercise_title">Name</string>
+    <string name="exercise_type">Type</string>
+    <string name="distance_unit">mi</string>
+    <string name="weight_unit">lbs</string>
+    <string name="delete_exercise">Delete Exercise</string>
 </resources>
