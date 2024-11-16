@@ -3,9 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+
 android {
     namespace = "dev.asid.activitytracker"
     compileSdk = 35
+
 
     defaultConfig {
         applicationId = "dev.asid.activitytracker"
@@ -45,4 +47,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.gson)
 }

@@ -21,17 +21,6 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val btnGo = findViewById<Button>(R.id.startWorkout)
-        btnGo.setOnClickListener {
-            val intent = Intent(this, workoutActivity::class.java)
-            intent.putParcelableArrayListExtra("workout", workout)
-            startActivity(intent)
-        }
-        saveWorkout(workout)
-
-        loadWorkoutFromJSON()
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -40,6 +29,49 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        var a:Exercise = Exercise()
+        var b:Exercise = Exercise()
+        var c:Exercise = Exercise()
+        var d:Exercise = Exercise()
+        var e:Exercise = Exercise()
+        a.title = "Test"
+        a.reps = 1
+        a.sets = 1
+        a.weight = 1
+        a.distance = 1
+        a.type = Exercise.EXERCISETYPE.WEIGHTS
+        b.title = "Test2"
+        b.reps = 2
+        b.sets = 2
+        b.weight = 2
+        b.distance = 2
+        b.type = Exercise.EXERCISETYPE.WEIGHTS
+        c.title = "Test3"
+        c.reps = 3
+        c.sets = 3
+        c.weight = 3
+        c.distance = 3
+        c.type = Exercise.EXERCISETYPE.WEIGHTS
+        d.title = "Test4"
+        d.reps = 4
+        d.sets = 4
+        d.weight = 4
+        d.distance = 4
+        d.type = Exercise.EXERCISETYPE.WEIGHTS
+        e.title = "Test5"
+        e.reps = 5
+        e.sets = 5
+        e.weight = 5
+        e.distance = 5
+        e.type = Exercise.EXERCISETYPE.WEIGHTS
+        workout.add(a)
+        workout.add(b)
+        workout.add(c)
+        workout.add(d)
+        workout.add(e)
+        saveWorkout(workout)
+        loadWorkoutFromJSON()
 
         val createBtn = findViewById<Button>(R.id.createActivity)
         createBtn.setOnClickListener {
@@ -56,6 +88,23 @@ class MainActivity : AppCompatActivity() {
         adapter!!.notifyDataSetChanged()
         Log.i("Adapter", "notify data set changed")
         recycler!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+
+        var btnGo : Button = findViewById(R.id.startWorkout)
+        var extraString:ArrayList<String> = ArrayList()
+        for (exercise in workout){
+            //Toast.makeText(this, exercise.convertToJSON().toString(), Toast.LENGTH_SHORT).show()
+            extraString.add(exercise.convertToJSON().toString())
+        }
+
+        btnGo.setOnClickListener {
+            val intent = Intent(this, workoutActivity::class.java)
+            intent.putExtra("workout", extraString)
+            startActivity(intent)
+        }
+
+
+
+
     }
 
     private fun loadWorkoutFromJSON() {
@@ -93,6 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addExercise(exercise: Exercise) {
+        //Toast.makeText(this, exercise.convertToJSON().toString(), Toast.LENGTH_SHORT).show()
         workout.add(exercise)
         adapter!!.notifyItemInserted(workout.size - 1)
         saveWorkout(workout)
