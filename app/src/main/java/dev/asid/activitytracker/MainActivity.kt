@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var workout: ArrayList<Exercise> = ArrayList()
     private var recycler: RecyclerView? = null
     private var adapter: ExerciseAdapter? = null
+    private var extraString:ArrayList<String> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,13 +48,8 @@ class MainActivity : AppCompatActivity() {
         Log.i("Adapter", "notify data set changed")
         recycler!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
-        var btnGo : Button = findViewById(R.id.startWorkout)
-        var extraString:ArrayList<String> = ArrayList()
-
-        for (exercise in workout){
-            //Toast.makeText(this, exercise.convertToJSON().toString(), Toast.LENGTH_SHORT).show()
-            extraString.add(exercise.convertToJSON().toString())
-        }
+        val btnGo : Button = findViewById(R.id.startWorkout)
+        buildExtraString()
 
         btnGo.setOnClickListener {
             val intent = Intent(this, workoutActivity::class.java)
@@ -61,6 +57,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    private fun buildExtraString() {
+        extraString.clear()
+        for (exercise in workout) {
+            //Toast.makeText(this, exercise.convertToJSON().toString(), Toast.LENGTH_SHORT).show()
+            extraString.add(exercise.convertToJSON().toString())
+        }
     }
 
     private fun loadWorkoutFromJSON() {
@@ -100,6 +104,7 @@ class MainActivity : AppCompatActivity() {
     fun addExercise(exercise: Exercise) {
         //Toast.makeText(this, exercise.convertToJSON().toString(), Toast.LENGTH_SHORT).show()
         workout.add(exercise)
+        buildExtraString()
         adapter!!.notifyItemInserted(workout.size - 1)
         saveWorkout(workout)
         Log.i("Adapter", "notify data set changed")
@@ -124,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         workout!!.removeAt(pos)
         adapter!!.notifyItemRemoved(pos)
         saveWorkout(workout)
+        buildExtraString()
         Log.i("Adapter", "notify data set changed")
         workoutToLog()
     }
@@ -133,6 +139,6 @@ class MainActivity : AppCompatActivity() {
         workout!![pos] = newExercise
         adapter!!.notifyItemChanged(pos)
         saveWorkout(workout)
-
+        buildExtraString()
     }
 }
