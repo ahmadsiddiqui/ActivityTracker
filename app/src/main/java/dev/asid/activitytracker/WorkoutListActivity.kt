@@ -29,12 +29,11 @@ class WorkoutListActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        //loadWorkoutListFromJSON()
 
         var workout:Workout = Workout()
         val extraString = intent.getStringExtra("workout")
         workout = Gson().fromJson(extraString, Workout::class.java)
-        workoutList.add(workout)
-        saveWorkoutList(workoutList)
 
         recycler = findViewById(R.id.workoutListRecyclerView)
         var goToMainBtn = findViewById<Button>(R.id.goToMain)
@@ -47,8 +46,10 @@ class WorkoutListActivity : AppCompatActivity() {
         recycler!!.itemAnimator = DefaultItemAnimator()
         recycler!!.adapter = adapter
         recycler!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-
         loadWorkoutListFromJSON()
+        addWorkout(workout)
+        saveWorkoutList(workoutList)
+
         adapter!!.notifyDataSetChanged()
 
     }
@@ -60,6 +61,13 @@ class WorkoutListActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("Error loading workoutList", "", e)
         }
+    }
+    fun addWorkout(workout: Workout) {
+        workoutList.add(workout)
+        adapter!!.notifyDataSetChanged()
+        saveWorkoutList(workoutList)
+        Log.i("Adapter", "notify data set changed")
+
     }
 
     fun saveWorkoutList(workoutList: ArrayList<Workout>) {

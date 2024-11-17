@@ -4,6 +4,7 @@ package dev.asid.activitytracker
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,6 +25,7 @@ class workoutActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val mainLayout = findViewById<LinearLayout>(R.id.linearLayout)
         var workout: ArrayList<Exercise> = ArrayList()
         val extraString = intent.getStringArrayListExtra("workout")
         for (string in extraString!!){
@@ -36,16 +38,39 @@ class workoutActivity : AppCompatActivity() {
         var targetSets = findViewById<TextView>(R.id.targetSets)
         var targetWeight = findViewById<TextView>(R.id.targetWeight)
 
+        var actualReps = findViewById<TextView>(R.id.actualReps)
+        var actualSets = findViewById<TextView>(R.id.actualSets)
+        var actualWeight = findViewById<TextView>(R.id.actualWeight)
+
+        currentExerciseTitle.visibility = View.INVISIBLE
+        targetReps.visibility = View.INVISIBLE
+        targetSets.visibility = View.INVISIBLE
+        targetWeight.visibility = View.INVISIBLE
+
+
         var completedExercises: ArrayList<Exercise> = ArrayList()
 
         val btnNext = findViewById<Button>(R.id.btnNext)
         btnNext.setOnClickListener {
+            currentExerciseTitle.visibility = View.VISIBLE
+            targetReps.visibility = View.VISIBLE
+            targetSets.visibility = View.VISIBLE
+            targetWeight.visibility = View.VISIBLE
+
+
             if (completedExercises.size < workout.size) {
                 var currentExercise = workout[completedExercises.size]
                 currentExerciseTitle.text = currentExercise.title
                 targetReps.text = currentExercise.reps.toString()
                 targetSets.text = currentExercise.sets.toString()
                 targetWeight.text = currentExercise.weight.toString()
+                actualReps.text = targetReps.text
+                actualSets.text = targetSets.text
+                actualWeight.text = targetWeight.text
+
+                currentExercise.reps = actualReps.text.toString().toInt()
+                currentExercise.sets = actualSets.text.toString().toInt()
+                currentExercise.weight = actualWeight.text.toString().toInt()
 
                 completedExercises.add(currentExercise)
             }
@@ -55,7 +80,13 @@ class workoutActivity : AppCompatActivity() {
                 workout.setWorkout(completedExercises)
                 workout.setDate()
 
+
                 val extraString:String = Gson().toJson(workout).toString()
+
+                val tv = TextView(this)
+                tv.text = extraString
+                mainLayout.addView(tv)
+
                 val intent = Intent(this, WorkoutListActivity::class.java)
                 intent.putExtra("workout", extraString)
                 startActivity(intent)

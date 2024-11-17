@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="300dp">
 
     <TextView
         android:id="@+id/exerciseTitle"
@@ -14,20 +14,149 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/deleteButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.687" />
+        app:layout_constraintVertical_bias="0.268" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weights"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginBottom="52dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/createActivityButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TableRow
+            android:id="@+id/tableRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/reps_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/reps"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/weight_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:labelFor="@id/sets_input"
+                android:text="@string/weight"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/sets_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:labelFor="@+id/weight_input"
+                android:text="@string/sets"
+                android:textAlignment="center"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tableRow"
+            tools:layout_editor_absoluteX="0dp">
+
+            <EditText
+                android:id="@+id/reps_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/weight_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/sets_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:visibility="visible" />
+        </TableRow>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/distance_input2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weights" />
+
+    <TextView
+        android:id="@+id/distance_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:labelFor="@id/distance_input"
+        android:text="@string/enter_distance"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/distance_input"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup" />
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/delete_exercise"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.856"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weights"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btnOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Exercise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weights"
+        app:layout_constraintVertical_bias="0.428" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

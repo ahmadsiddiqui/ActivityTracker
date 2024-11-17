@@ -1,5 +1,8 @@
 package dev.asid.activitytracker
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.Date
@@ -10,11 +13,15 @@ class Workout {
 
     private val JSON_DATE = "date"
     private val JSON_WORKOUT = "workout"
-
+    //private val gson: Gson = GsonBuilder().create()
     @Throws(JSONException::class)
     constructor(json: JSONObject) {
         date = json.getString(JSON_DATE)
-        val workoutArray = json.getJSONArray(JSON_WORKOUT)
+        workoutArray = ArrayList<Exercise>()
+        val workoutArrayJSON = json.getJSONArray(JSON_WORKOUT)
+        for (i in 0 until workoutArrayJSON.length()) {
+            workoutArray.add(Gson().fromJson(workoutArrayJSON.getString(i), Exercise::class.java))
+        }
 
     }
     constructor() {
@@ -22,6 +29,11 @@ class Workout {
     }
     @Throws(JSONException::class)
     fun convertToJSON(): JSONObject {
+        val workoutArray: JSONArray = JSONArray()
+        for (exercise in (this.workoutArray)){
+            workoutArray.put(Gson().toJson(exercise))
+        }
+
         val json = JSONObject()
         json.put(JSON_DATE, date)
         json.put(JSON_WORKOUT, workoutArray)
