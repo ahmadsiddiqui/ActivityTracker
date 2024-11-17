@@ -1,0 +1,6 @@
+dev.asid.activitytracker.test.app-androidTest-0 C:\AndroidProjects\ActivityTracker\app\build\generated\res\resValues\androidTest\debug
+dev.asid.activitytracker.test.app-mergeDebugAndroidTestResources-1 C:\AndroidProjects\ActivityTracker\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+dev.asid.activitytracker.test.app-mergeDebugAndroidTestResources-2 C:\AndroidProjects\ActivityTracker\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+dev.asid.activitytracker.test.app-debugAndroidTest-3 C:\AndroidProjects\ActivityTracker\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
+dev.asid.activitytracker.test.app-tracing-1.2.0-4 C:\Users\ahmad\.gradle\caches\8.9\transforms\d0b810e3565d682962b9b586edb9e628\transformed\tracing-1.2.0\res
+dev.asid.activitytracker.test.app-core-1.6.1-5 C:\Users\ahmad\.gradle\caches\8.9\transforms\f9b9f4719c2e3509985fa21e2e11527f\transformed\core-1.6.1\res
