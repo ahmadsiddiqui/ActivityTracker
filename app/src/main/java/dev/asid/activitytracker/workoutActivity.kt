@@ -83,10 +83,6 @@ class workoutActivity : AppCompatActivity() {
 
                 val extraString:String = Gson().toJson(workout).toString()
 
-                val tv = TextView(this)
-                tv.text = extraString
-                mainLayout.addView(tv)
-
                 val intent = Intent(this, WorkoutListActivity::class.java)
                 intent.putExtra("workout", extraString)
                 startActivity(intent)
