@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         buildExtraString()
 
         btnGo.setOnClickListener {
-            val intent = Intent(this, workoutActivity::class.java)
+            val intent = Intent(this, WorkoutActivity::class.java)
             intent.putExtra("workout", extraString)
             startActivity(intent)
         }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,10 +18,12 @@ import com.google.gson.Gson
 class WorkoutListActivity : AppCompatActivity() {
     private var mSerializer: JSONListSerializer? = null
     private var workoutList: ArrayList<Workout> = ArrayList()
-    private var recycler: RecyclerView? = null
-    private var adapter: WorkoutListAdapter? = null
+    private var recycler: RecyclerView? = findViewById(R.id.workoutListRecyclerView)
+    private var adapter: WorkoutListAdapter? = WorkoutListAdapter(this, workoutList)
+    var goToMainBtn = findViewById<Button>(R.id.goToMain)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i("Workout List Activity", "Created")
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_workout_list)
@@ -31,12 +34,18 @@ class WorkoutListActivity : AppCompatActivity() {
         }
         //loadWorkoutListFromJSON()
 
-        var workout:Workout = Workout()
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        var workout: Workout
         val extraString = intent.getStringExtra("workout")
+        Toast.makeText(this, extraString, Toast.LENGTH_LONG).show()
         workout = Gson().fromJson(extraString, Workout::class.java)
 
-        recycler = findViewById(R.id.workoutListRecyclerView)
-        var goToMainBtn = findViewById<Button>(R.id.goToMain)
+
         goToMainBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -51,8 +60,8 @@ class WorkoutListActivity : AppCompatActivity() {
         saveWorkoutList(workoutList)
 
         adapter!!.notifyDataSetChanged()
-
     }
+
 
     private fun loadWorkoutListFromJSON() {
         mSerializer = JSONListSerializer("WorkoutList.json", applicationContext)
