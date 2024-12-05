@@ -18,9 +18,9 @@ import com.google.gson.Gson
 class WorkoutListActivity : AppCompatActivity() {
     private var mSerializer: JSONListSerializer? = null
     private var workoutList: ArrayList<Workout> = ArrayList()
-    private var recycler: RecyclerView? = findViewById(R.id.workoutListRecyclerView)
-    private var adapter: WorkoutListAdapter? = WorkoutListAdapter(this, workoutList)
-    var goToMainBtn = findViewById<Button>(R.id.goToMain)
+    private var recycler: RecyclerView? = null
+    private var adapter: WorkoutListAdapter? = null
+    private var goToMainBtn: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("Workout List Activity", "Created")
@@ -32,21 +32,21 @@ class WorkoutListActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        //loadWorkoutListFromJSON()
-
-
-
+        loadWorkoutListFromJSON()
+        recycler = findViewById(R.id.workoutListRecyclerView)
+        goToMainBtn = findViewById(R.id.goToMain)
     }
 
     override fun onStart() {
         super.onStart()
         var workout: Workout
         val extraString = intent.getStringExtra("workout")
-        Toast.makeText(this, extraString, Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, extraString, Toast.LENGTH_LONG).show()
         workout = Gson().fromJson(extraString, Workout::class.java)
 
 
-        goToMainBtn.setOnClickListener {
+
+        goToMainBtn?.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

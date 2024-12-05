@@ -11,7 +11,9 @@ id actualSets
 id actualWeight
 id btnNext
 id btnOK
+id btnPrev
 id cardio_radio
+id completedExerciseScrollView
 id createActivity
 id createActivityButton
 id currentExerciseTitle
@@ -22,6 +24,7 @@ id distance_input
 id distance_input2
 id distance_label
 id distance_label2
+id exerciseScrollView
 id exerciseTitle
 id exerciseType
 id goToMain
@@ -42,6 +45,8 @@ id targetSets
 id targetWeight
 id textView
 id textView2
+id textView3
+id textView4
 id textView7
 id textView8
 id title_input

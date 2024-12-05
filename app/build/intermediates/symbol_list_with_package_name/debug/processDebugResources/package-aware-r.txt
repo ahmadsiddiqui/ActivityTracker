@@ -3217,6 +3217,7 @@ id bounceEnd
 id bounceStart
 id btnNext
 id btnOK
+id btnPrev
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -3241,6 +3242,7 @@ id clip_vertical
 id clockwise
 id closest
 id collapseActionView
+id completedExerciseScrollView
 id compress
 id confirm_button
 id constraint
@@ -3310,6 +3312,7 @@ id endToStart
 id enterAlways
 id enterAlwaysCollapsed
 id escape
+id exerciseScrollView
 id exerciseTitle
 id exerciseType
 id exitUntilCollapsed
@@ -3600,6 +3603,8 @@ id textStart
 id textTop
 id textView
 id textView2
+id textView3
+id textView4
 id textView7
 id textView8
 id text_input_end_icon

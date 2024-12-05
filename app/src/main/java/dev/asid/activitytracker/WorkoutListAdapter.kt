@@ -13,6 +13,10 @@ class WorkoutListAdapter(
         inner class WorkoutListViewHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
             internal var date = view.findViewById<TextView>(R.id.date)
+            init {
+                view.isClickable = true
+                view.setOnClickListener(this)
+            }
             override fun onClick(v: View?) {
                 mainActivity.showWorkout(adapterPosition)
 

@@ -8,15 +8,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.gson.Gson
-import org.json.JSONException
 
 class WorkoutActivity : AppCompatActivity() {
+
+
+    var workout: ArrayList<Exercise> = ArrayList()
+    val completedExercises: ArrayList<Exercise> = ArrayList()
+    var currentExercise:Exercise = Exercise()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("Workout Activity", "Created")
         super.onCreate(savedInstanceState)
@@ -27,13 +31,11 @@ class WorkoutActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val mainLayout = findViewById<LinearLayout>(R.id.linearLayout)
-        var workout: ArrayList<Exercise> = ArrayList()
-        var newWorkout:Workout? = null
+
         val extraString = intent.getStringArrayListExtra("workout")
-        for (string in extraString!!){
-            var exercise = Gson().fromJson(string, Exercise::class.java)
-            workout.add(exercise)
+
+        for (string in extraString!!) {
+            workout.add(Gson().fromJson(string, Exercise::class.java))
         }
 
         var currentExerciseTitle = findViewById<TextView>(R.id.currentExerciseTitle)
@@ -45,54 +47,99 @@ class WorkoutActivity : AppCompatActivity() {
         var actualSets = findViewById<TextView>(R.id.actualSets)
         var actualWeight = findViewById<TextView>(R.id.actualWeight)
 
-        currentExerciseTitle.visibility = View.INVISIBLE
-        targetReps.visibility = View.INVISIBLE
-        targetSets.visibility = View.INVISIBLE
-        targetWeight.visibility = View.INVISIBLE
+        var exerciseScrollView = findViewById<LinearLayout>(R.id.exerciseScrollView)
+        var completedExerciseScrollView = findViewById<LinearLayout>(R.id.completedExerciseScrollView)
 
-
-        val completedExercises: ArrayList<Exercise> = ArrayList()
+        updateScrollViews(exerciseScrollView, completedExerciseScrollView)
 
         val btnNext = findViewById<Button>(R.id.btnNext)
+        val btnPrev = findViewById<Button>(R.id.btnPrev)
+
+        currentExercise = workout[0]
+
+        currentExerciseTitle.text = currentExercise.title.uppercase()
+        targetReps.text = currentExercise.reps.toString()
+        targetSets.text = currentExercise.sets.toString()
+        targetWeight.text = currentExercise.weight.toString()
+
+        actualReps.text = currentExercise.reps.toString()
+        actualSets.text = currentExercise.sets.toString()
+        actualWeight.text = currentExercise.weight.toString()
+
         btnNext.setOnClickListener {
-            if (completedExercises.size == workout.size) {
-                btnNext.text = "FINISHED"
-                newWorkout?.setWorkout(completedExercises)
-                newWorkout?.setDate()
-                val intent = Intent(this, WorkoutListActivity::class.java)
-                val jsonString = Gson().toJson(newWorkout, Workout::class.java)
-                intent.putExtra("workout", jsonString)
-                //startActivity(intent)
-                val tv = TextView(this)
-                tv.textSize = 20f
-                tv.text = newWorkout.toString()
-                mainLayout.addView(tv)
 
-            }
-            Toast.makeText(this, "${completedExercises.size} | ${workout.size}", Toast.LENGTH_SHORT)
-                .show()
-            currentExerciseTitle.visibility = View.VISIBLE
-            targetReps.visibility = View.VISIBLE
-            targetSets.visibility = View.VISIBLE
-            targetWeight.visibility = View.VISIBLE
+            if (workout.size > 0) {
+                currentExercise.sets = actualSets.text!!.toString().toInt()
+                currentExercise.reps = actualReps.text!!.toString().toInt()
+                currentExercise.weight = actualWeight.text!!.toString().toInt()
+                workout.removeAt(0)
+                completedExercises.add(currentExercise)
 
+                if (workout.size > 0) {currentExercise = workout[0]}
 
-            if (completedExercises.size < workout.size) {
-                val currentExercise = workout[completedExercises.size]
-                currentExerciseTitle.text = currentExercise.title
+                currentExerciseTitle.text = currentExercise.title.uppercase()
                 targetReps.text = currentExercise.reps.toString()
                 targetSets.text = currentExercise.sets.toString()
                 targetWeight.text = currentExercise.weight.toString()
-                actualReps.text = targetReps.text
-                actualSets.text = targetSets.text
-                actualWeight.text = targetWeight.text
 
-                currentExercise.reps = actualReps.text.toString().toInt()
-                currentExercise.sets = actualSets.text.toString().toInt()
-                currentExercise.weight = actualWeight.text.toString().toInt()
+                actualReps.text = currentExercise.reps.toString()
+                actualSets.text = currentExercise.sets.toString()
+                actualWeight.text = currentExercise.weight.toString()
 
-                completedExercises.add(currentExercise)
             }
+            if (workout.size == 0) {
+                btnNext.text = "FINISH"
+                btnNext.setOnClickListener {
+                    val intent = Intent(this, WorkoutListActivity::class.java)
+                    val newWorkout:Workout = Workout()
+                    newWorkout.setWorkout(completedExercises)
+                    intent.putExtra("workout", Gson().toJson(newWorkout))
+
+                    startActivity(intent)
+                }
+                //var intent = Intent(this, WorkoutListActivity::class.java)
+                //intent.putExtra("workout", Gson().toJson(completedExercises))
+                //startActivity(intent)
+            }
+            updateScrollViews(exerciseScrollView, completedExerciseScrollView)
+
+        }
+        btnPrev.setOnClickListener {
+            if (completedExercises.size > 0) {
+                workout.add(0,completedExercises[completedExercises.size - 1])
+                completedExercises.removeAt(completedExercises.size - 1)
+                currentExercise = workout[0]
+                currentExerciseTitle.text = currentExercise.title.uppercase()
+                targetReps.text = currentExercise.reps.toString()
+                targetSets.text = currentExercise.sets.toString()
+                targetWeight.text = currentExercise.weight.toString()
+
+                actualReps.text = currentExercise.reps.toString()
+                actualSets.text = currentExercise.sets.toString()
+                actualWeight.text = currentExercise.weight.toString()
+            }
+            updateScrollViews(exerciseScrollView, completedExerciseScrollView)
+        }
+
+    }
+
+    private fun updateScrollViews(
+        exerciseScrollView: LinearLayout,
+        completedExerciseScrollView: LinearLayout
+    ) {
+        exerciseScrollView.removeAllViews()
+        completedExerciseScrollView.removeAllViews()
+        for (exercise in workout) {
+            val tv = TextView(this)
+            tv.text = exercise.title.uppercase()
+            tv.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            exerciseScrollView.addView(tv)
+        }
+        for (exercise in completedExercises) {
+            val tv = TextView(this)
+            tv.text = exercise.title.uppercase()
+            tv.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            completedExerciseScrollView.addView(tv)
         }
     }
 }

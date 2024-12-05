@@ -3,6 +3,7 @@ package dev.asid.activitytracker
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
@@ -17,7 +18,7 @@ class DialogShowWorkout : DialogFragment(){
         builder.setView(dialogView)
 
         val dateTextView = dialogView.findViewById<TextView>(R.id.dateTextView)
-        val workoutScrollView = dialogView.findViewById<ScrollView>(R.id.workoutScrollView)
+        val workoutScrollView = dialogView.findViewById<LinearLayout>(R.id.workoutScrollView)
 
         dateTextView.text = workout!!.date
 
