@@ -21,7 +21,6 @@ class DialogNewExercise: DialogFragment() {
         val dialogView = inflater.inflate(R.layout.dialog_new_exercise, null)
 
         builder.setView(dialogView)
-        builder.setMessage(R.string.new_exercise_message)
 
         val weightLayout = dialogView.findViewById<ConstraintLayout>(R.id.weights)
         val title = dialogView.findViewById<TextView>(R.id.title_input)
@@ -34,6 +33,8 @@ class DialogNewExercise: DialogFragment() {
         val weightsRadio = dialogView.findViewById<MaterialRadioButton>(R.id.weights_radio)
         val cardioRadio = dialogView.findViewById<MaterialRadioButton>(R.id.cardio_radio)
         val type: EXERCISETYPE? = null
+        val incompleteWarning = dialogView.findViewById<TextView>(R.id.incompleteWarning)
+        incompleteWarning.visibility = View.INVISIBLE
 
 
         val btnOK = dialogView.findViewById<TextView>(R.id.createActivityButton)
@@ -64,18 +65,26 @@ class DialogNewExercise: DialogFragment() {
             if (radioButton == weightsRadio){
                 exercise.type = EXERCISETYPE.WEIGHTS
                 //Toast.makeText(requireContext(), "Weights Selected", Toast.LENGTH_SHORT).show()
-                dismiss()
+                //dismiss()
             } else if (radioButton == cardioRadio) {
                 exercise.type = EXERCISETYPE.CARDIO
-                dismiss()
-            }
-            else{
-                Toast.makeText(requireContext(), "Please select a type", Toast.LENGTH_SHORT).show()
+                exercise.weight = -1
+                exercise.reps = -1
+                exercise.sets = -1
+                //Toast.makeText(requireContext(), "Cardio Selected", Toast.LENGTH_SHORT).show()
+                //dismiss()
             }
             val callingActivity = activity as MainActivity?
-            callingActivity!!.addExercise(exercise)
-
-
+            if(exercise.title != ""
+                && exercise.type != null
+                && (exercise.weight != 0 || exercise.distance != 0)
+                && exercise.reps != 0
+                && exercise.sets != 0){
+                callingActivity!!.addExercise(exercise)
+                dismiss()
+            } else {
+                incompleteWarning.visibility = View.VISIBLE
+            }
         }
         return builder.create()
 

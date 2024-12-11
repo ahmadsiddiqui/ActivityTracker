@@ -3,6 +3,7 @@ package dev.asid.activitytracker
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,11 +13,17 @@ class DialogShowExercise : DialogFragment() {
     private var exercise: Exercise? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        if (exercise == null) {
+            dismiss()
+            Log.i("DialogShowExercise", "Exercise is null")
+        }
+
         val builder = AlertDialog.Builder(requireActivity())
         val inflater = requireActivity().layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_show_exercise, null)
         builder.setView(dialogView)
 
+        val incompleteWarning = dialogView.findViewById<TextView>(R.id.incompleteWarning2)
         val exerciseTitle = dialogView.findViewById<TextView>(R.id.exerciseTitle)
         val deleteButton = dialogView.findViewById<Button>(R.id.deleteButton)
         val weights = dialogView.findViewById<ConstraintLayout>(R.id.weights)
@@ -26,7 +33,9 @@ class DialogShowExercise : DialogFragment() {
         val weight = dialogView.findViewById<TextView>(R.id.weight_input)
         val sets = dialogView.findViewById<TextView>(R.id.sets_input)
         val btnOK = dialogView.findViewById<TextView>(R.id.btnOK)
-        exerciseTitle.text = exercise!!.title
+
+        incompleteWarning.visibility = TextView.INVISIBLE
+
 
         if (exercise!!.type == Exercise.EXERCISETYPE.WEIGHTS) {
             weights.visibility = ConstraintLayout.VISIBLE
@@ -39,12 +48,14 @@ class DialogShowExercise : DialogFragment() {
             distance_label.visibility = TextView.VISIBLE
         }
 
+        exerciseTitle.text = exercise!!.title
         reps.text = exercise?.reps.toString()
         weight.text = exercise?.weight.toString()
         sets.text = exercise?.sets.toString()
         distance.text = exercise?.distance.toString()
 
 
+        exercise?.title.let { exerciseTitle.text = it }
         exercise?.reps.let { reps.text = it.toString() }
         exercise?.weight.let { weight.text = it.toString() }
         exercise?.sets.let { sets.text = it.toString() }
@@ -57,6 +68,12 @@ class DialogShowExercise : DialogFragment() {
             dismiss()
         }
         btnOK.setOnClickListener {
+            if (exerciseTitle.text.isEmpty()) {
+                incompleteWarning.visibility = TextView.VISIBLE
+                exerciseTitle.requestFocus()
+                return@setOnClickListener
+            }
+
             var newExercise = Exercise()
             newExercise.reps = reps.text.toString().toIntOrNull() ?: 0
             newExercise.weight = weight.text.toString().toIntOrNull() ?: 0

@@ -2,6 +2,7 @@ R_DEF: Internal format may change without notice
 local
 color black
 color ic_launcher_background
+color red
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -12,13 +13,17 @@ id actualWeight
 id btnNext
 id btnOK
 id btnPrev
+id btnSkip
+id buttons
 id cardio_radio
 id completedExerciseScrollView
+id contentMain
 id createActivity
 id createActivityButton
 id currentExerciseTitle
 id date
 id dateTextView
+id deleteBtn
 id deleteButton
 id distance_input
 id distance_input2
@@ -28,6 +33,8 @@ id exerciseScrollView
 id exerciseTitle
 id exerciseType
 id goToMain
+id incompleteWarning
+id incompleteWarning2
 id linearLayout
 id main
 id radioGroup
@@ -40,6 +47,8 @@ id sets_input
 id sets_label
 id startWorkout
 id tableRow
+id tableRow2
+id tableRow3
 id targetReps
 id targetSets
 id targetWeight
@@ -50,6 +59,7 @@ id textView4
 id textView7
 id textView8
 id title_input
+id viewList
 id weightOrDistance
 id weight_input
 id weight_label

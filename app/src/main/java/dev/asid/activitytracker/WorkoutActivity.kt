@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,10 +21,10 @@ class WorkoutActivity : AppCompatActivity() {
 
     var workout: ArrayList<Exercise> = ArrayList()
     val completedExercises: ArrayList<Exercise> = ArrayList()
+    var skippedExercises: ArrayList<Exercise> = ArrayList()
     var currentExercise:Exercise = Exercise()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("Workout Activity", "Created")
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_workout)
@@ -54,6 +56,7 @@ class WorkoutActivity : AppCompatActivity() {
 
         val btnNext = findViewById<Button>(R.id.btnNext)
         val btnPrev = findViewById<Button>(R.id.btnPrev)
+        val btnSkip = findViewById<Button>(R.id.btnSkip)
 
         currentExercise = workout[0]
 
@@ -87,6 +90,27 @@ class WorkoutActivity : AppCompatActivity() {
                 actualWeight.text = currentExercise.weight.toString()
 
             }
+            if(skippedExercises.size > 0){
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("Review Skipped Exercises")
+                alert.setMessage("Would you like to review skipped exercises?")
+                alert.setPositiveButton("Yes") { _, _ ->
+                    for( ex in skippedExercises){
+                        workout.add(ex)
+                    }
+                    skippedExercises.clear()
+                    currentExercise = workout[0]
+                    currentExerciseTitle.text = currentExercise.title.uppercase()
+                    targetReps.text = currentExercise.reps.toString()
+                    targetSets.text = currentExercise.sets.toString()
+                    targetWeight.text = currentExercise.weight.toString()
+                    actualReps.text = currentExercise.reps.toString()
+                    actualSets.text = currentExercise.sets.toString()
+                    actualWeight.text = currentExercise.weight.toString()
+                }
+                alert.setNegativeButton("No"){ _, _ -> skippedExercises.clear()}
+                alert.show()
+            }
             if (workout.size == 0) {
                 btnNext.text = "FINISH"
                 btnNext.setOnClickListener {
@@ -97,9 +121,6 @@ class WorkoutActivity : AppCompatActivity() {
 
                     startActivity(intent)
                 }
-                //var intent = Intent(this, WorkoutListActivity::class.java)
-                //intent.putExtra("workout", Gson().toJson(completedExercises))
-                //startActivity(intent)
             }
             updateScrollViews(exerciseScrollView, completedExerciseScrollView)
 
@@ -109,18 +130,42 @@ class WorkoutActivity : AppCompatActivity() {
                 workout.add(0,completedExercises[completedExercises.size - 1])
                 completedExercises.removeAt(completedExercises.size - 1)
                 currentExercise = workout[0]
-                currentExerciseTitle.text = currentExercise.title.uppercase()
-                targetReps.text = currentExercise.reps.toString()
-                targetSets.text = currentExercise.sets.toString()
-                targetWeight.text = currentExercise.weight.toString()
 
-                actualReps.text = currentExercise.reps.toString()
-                actualSets.text = currentExercise.sets.toString()
-                actualWeight.text = currentExercise.weight.toString()
+            }
+            updateScrollViews(exerciseScrollView, completedExerciseScrollView)
+        }
+        btnSkip.setOnClickListener {
+            if (workout.size > 0) {
+                skippedExercises.add(workout[0])
+                workout.removeAt(0)
+                if (workout.size > 0) {
+                    currentExercise = workout[0]
+                    currentExerciseTitle.text = currentExercise.title.uppercase()
+                    targetReps.text = currentExercise.reps.toString()
+                    targetSets.text = currentExercise.sets.toString()
+                    targetWeight.text = currentExercise.weight.toString()
+
+                    actualReps.text = currentExercise.reps.toString()
+                    actualSets.text = currentExercise.sets.toString()
+                    actualWeight.text = currentExercise.weight.toString()
+                }
             }
             updateScrollViews(exerciseScrollView, completedExerciseScrollView)
         }
 
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val alert = AlertDialog.Builder(this@WorkoutActivity)
+                alert.setTitle("Workout not complete!")
+                alert.setMessage("Would you like to cancel this workout? Progress will not be saved")
+                alert.setPositiveButton("Yes") { _, _ ->
+                    val intent = Intent(this@WorkoutActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }
+                alert.setNegativeButton("No", null)
+                alert.show()
+            }
+        })
     }
 
     private fun updateScrollViews(

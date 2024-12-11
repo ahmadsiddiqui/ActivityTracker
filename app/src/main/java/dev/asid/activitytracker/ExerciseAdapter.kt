@@ -42,13 +42,18 @@ class ExerciseAdapter(
         val exercise = workout[position]
         holder.title.text = exercise.title
         holder.type.text = exercise.type.toString()
-        holder.sets.text = buildString {
-            append(exercise.sets.toString())
-            append(" sets")
+        if (exercise.sets > 0) {
+            holder.sets.text = buildString {
+                append(exercise.sets.toString())
+                append(" sets")
+            }
         }
-        holder.reps.text = buildString {
-            append(exercise.reps.toString())
-            append(" reps")
+
+        if (exercise.reps > 0) {
+            holder.reps.text = buildString {
+                append(exercise.reps.toString())
+                append(" reps")
+            }
         }
         when (exercise.type) {
             Exercise.EXERCISETYPE.WEIGHTS -> {

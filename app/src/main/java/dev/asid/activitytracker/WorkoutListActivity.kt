@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,10 +22,9 @@ class WorkoutListActivity : AppCompatActivity() {
     private var workoutList: ArrayList<Workout> = ArrayList()
     private var recycler: RecyclerView? = null
     private var adapter: WorkoutListAdapter? = null
-    private var goToMainBtn: Button? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("Workout List Activity", "Created")
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_workout_list)
@@ -34,32 +35,37 @@ class WorkoutListActivity : AppCompatActivity() {
         }
         loadWorkoutListFromJSON()
         recycler = findViewById(R.id.workoutListRecyclerView)
+        var goToMainBtn: Button? = null
         goToMainBtn = findViewById(R.id.goToMain)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        var workout: Workout
-        val extraString = intent.getStringExtra("workout")
-        //Toast.makeText(this, extraString, Toast.LENGTH_LONG).show()
-        workout = Gson().fromJson(extraString, Workout::class.java)
-
-
-
-        goToMainBtn?.setOnClickListener {
+        goToMainBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+        onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@WorkoutListActivity, MainActivity::class.java)
+                startActivity(intent)
+            }
+
+        })
+    }
+
+
+    override fun onStart() {
+        super.onStart()
         adapter = WorkoutListAdapter(this, workoutList)
         recycler!!.layoutManager = LinearLayoutManager(applicationContext)
         recycler!!.itemAnimator = DefaultItemAnimator()
         recycler!!.adapter = adapter
         recycler!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-        loadWorkoutListFromJSON()
-        addWorkout(workout)
-        saveWorkoutList(workoutList)
-
-        adapter!!.notifyDataSetChanged()
+        var workout: Workout
+        val extraString = intent.getStringExtra("workout")
+        if(extraString != null){
+            workout = Gson().fromJson(extraString, Workout::class.java)
+            loadWorkoutListFromJSON()
+            addWorkout(workout)
+            adapter!!.notifyDataSetChanged()
+        }
     }
 
 
@@ -73,9 +79,7 @@ class WorkoutListActivity : AppCompatActivity() {
     }
     fun addWorkout(workout: Workout) {
         workoutList.add(workout)
-        adapter!!.notifyDataSetChanged()
         saveWorkoutList(workoutList)
-        Log.i("Adapter", "notify data set changed")
 
     }
 
@@ -92,4 +96,13 @@ class WorkoutListActivity : AppCompatActivity() {
         dialog.setWorkout(workoutList!![adapterPosition])
         dialog.show(supportFragmentManager, "")
     }
+    fun deleteWorkout(workout: Workout) {
+        val pos = workoutList!!.indexOf(workout)
+        workoutList!!.removeAt(pos)
+        adapter!!.notifyItemRemoved(pos)
+        saveWorkoutList(workoutList)
+
+    }
+
+
 }

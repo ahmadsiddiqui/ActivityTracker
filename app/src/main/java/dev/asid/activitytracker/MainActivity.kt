@@ -1,10 +1,16 @@
 package dev.asid.activitytracker
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TableRow
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,6 +18,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
     private var mSerializer: JSONSerializer? = null
@@ -30,12 +37,32 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val mainLayout = findViewById<View>(R.id.main)
         loadWorkoutFromJSON()
+
 
         val createBtn = findViewById<Button>(R.id.createActivity)
         createBtn.setOnClickListener {
             DialogNewExercise().show(supportFragmentManager, "dialog")
         }
+        if(workout.size == 0) {
+
+            val newButton: MaterialButton = MaterialButton(this)
+            newButton.text = "Add an Activity"
+            findViewById<LinearLayout>(R.id.main).addView(newButton)
+            findViewById<TableRow>(R.id.buttons).visibility = View.INVISIBLE
+            newButton.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
+            newButton.layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+            newButton.setOnClickListener {
+                DialogNewExercise().show(supportFragmentManager, "dialog")
+                newButton.visibility = View.INVISIBLE
+                findViewById<TableRow>(R.id.buttons).visibility = View.VISIBLE
+            }
+        }
+
+
+
 
         recycler = findViewById(R.id.recyclerView)
         adapter = ExerciseAdapter(this, workout)
@@ -45,17 +72,32 @@ class MainActivity : AppCompatActivity() {
 
 
         adapter!!.notifyDataSetChanged()
-        Log.i("Adapter", "notify data set changed")
+
         recycler!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
-        val btnGo : Button = findViewById(R.id.startWorkout)
-        buildExtraString()
 
+        buildExtraString()
+        val btnGo : Button = findViewById(R.id.startWorkout)
         btnGo.setOnClickListener {
+            if(workout.size == 0){
+                val alert = AlertDialog.Builder(this)
+                    .setTitle("No Activities")
+                    .setMessage("Please add at least one activity to your workout.")
+                alert.setNeutralButton("OK", null)
+                alert.show()
+                return@setOnClickListener
+            }
             val intent = Intent(this, WorkoutActivity::class.java)
             intent.putExtra("workout", extraString)
             startActivity(intent)
         }
+
+        val btnList : Button = findViewById(R.id.viewList)
+        btnList.setOnClickListener {
+            val intent = Intent(this, WorkoutListActivity::class.java)
+            startActivity(intent)
+        }
+
 
     }
 
@@ -89,7 +131,6 @@ class MainActivity : AppCompatActivity() {
         //loadWorkoutFromJSON()
         recycler!!.adapter = adapter
         adapter!!.notifyDataSetChanged()
-        Log.i("Adapter", "notify data set changed")
         workoutToLog()
     }
 

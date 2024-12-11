@@ -3,5 +3,7 @@
     <style name="Base.Theme.ActivityTracker" parent="Theme.Material3.DayNight.NoActionBar">
         
         
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 </resources>

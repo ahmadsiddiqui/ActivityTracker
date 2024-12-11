@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="ic_launcher_background">#3DC4DC</color>
+    <color name="red">#FF0000</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">Activity Tracker</string>
     <string name="cardio">Cardio</string>
@@ -23,6 +24,7 @@
     <style name="Base.Theme.ActivityTracker" parent="Theme.Material3.DayNight.NoActionBar">
         
         
+        <item name="colorPrimary">@color/red</item>
     </style>
     <style name="Theme.ActivityTracker" parent="Base.Theme.ActivityTracker"/>
 </resources>

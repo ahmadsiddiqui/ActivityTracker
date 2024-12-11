@@ -2102,6 +2102,7 @@ color primary_text_default_material_dark
 color primary_text_default_material_light
 color primary_text_disabled_material_dark
 color primary_text_disabled_material_light
+color red
 color ripple_material_dark
 color ripple_material_light
 color secondary_text_default_material_dark
@@ -3217,7 +3218,9 @@ id bounceEnd
 id bounceStart
 id btnNext
 id btnOK
+id btnPrev
 id buttonPanel
+id buttons
 id cache_measures
 id callMeasure
 id cancel_button
@@ -3241,11 +3244,13 @@ id clip_vertical
 id clockwise
 id closest
 id collapseActionView
+id completedExerciseScrollView
 id compress
 id confirm_button
 id constraint
 id container
 id content
+id contentMain
 id contentPanel
 id contiguous
 id continuousVelocity
@@ -3267,6 +3272,7 @@ id decelerate
 id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
+id deleteBtn
 id deleteButton
 id deltaRelative
 id dependency_ordering
@@ -3310,6 +3316,7 @@ id endToStart
 id enterAlways
 id enterAlwaysCollapsed
 id escape
+id exerciseScrollView
 id exerciseTitle
 id exerciseType
 id exitUntilCollapsed
@@ -3357,6 +3364,8 @@ id ignoreRequest
 id image
 id immediateStop
 id included
+id incompleteWarning
+id incompleteWarning2
 id indeterminate
 id info
 id invisible
@@ -3575,6 +3584,8 @@ id submit_area
 id supportScrollUp
 id tabMode
 id tableRow
+id tableRow2
+id tableRow3
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
 id tag_accessibility_heading
@@ -3600,6 +3611,8 @@ id textStart
 id textTop
 id textView
 id textView2
+id textView3
+id textView4
 id textView7
 id textView8
 id text_input_end_icon
@@ -3638,6 +3651,7 @@ id up
 id useLogo
 id vertical
 id vertical_only
+id viewList
 id view_offset_helper
 id view_transition
 id view_tree_lifecycle_owner

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="300dp">
 
-    <TextView
+    <EditText
         android:id="@+id/exerciseTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,6 @@
         android:layout_height="100dp"
         android:layout_marginTop="124dp"
         android:layout_marginBottom="52dp"
-        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/createActivityButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -70,6 +69,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/tableRow3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -107,6 +107,19 @@
                 android:visibility="visible" />
         </TableRow>
 
+        <TextView
+            android:id="@+id/distance_label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/distance_input"
+            android:text="@string/enter_distance"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tableRow3"
+            app:layout_constraintStart_toStartOf="@+id/tableRow3"
+            app:layout_constraintTop_toTopOf="@+id/tableRow"
+            app:layout_constraintVertical_bias="0.234" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
@@ -116,21 +129,11 @@
         android:layout_marginTop="23dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:textAlignment="center"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/weights" />
-
-    <TextView
-        android:id="@+id/distance_label2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:labelFor="@id/distance_input"
-        android:text="@string/enter_distance"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/distance_input"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -157,6 +160,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weights"
         app:layout_constraintVertical_bias="0.428" />
+
+    <TextView
+        android:id="@+id/incompleteWarning2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All Fields must be filled"
+        android:textColor="#E91E63"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

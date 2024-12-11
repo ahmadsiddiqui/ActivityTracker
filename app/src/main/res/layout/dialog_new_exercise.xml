@@ -9,6 +9,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/exercise_name_prompt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,21 +52,18 @@
         android:id="@+id/createActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
         android:text="@string/create_activity_button"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/weights" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/weights"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_width="410dp"
+        android:layout_height="70dp"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="52dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/createActivityButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/radioGroup">
@@ -108,6 +106,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/tableRow2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -161,13 +160,24 @@
 
     <TextView
         android:id="@+id/distance_label"
-        android:labelFor="@id/distance_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="38dp"
+        android:labelFor="@id/distance_input"
         android:text="@string/enter_distance"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/distance_input"
         app:layout_constraintStart_toStartOf="@+id/radioGroup" />
+
+    <TextView
+        android:id="@+id/incompleteWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All fields must be filled"
+        android:textColor="@color/red"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createActivityButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
